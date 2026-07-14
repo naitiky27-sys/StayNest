@@ -1,0 +1,29 @@
+<% if (isFavourite) { %>
+
+<button
+    disabled
+    class="w-full mt-1 bg-gray-300 text-gray-600 py-3 rounded-xl cursor-not-allowed">
+
+    ❤️Added to Favorites
+
+</button>
+
+<% } else { %>
+
+<form action="/favourites" method="POST">
+
+    <input
+        type="hidden"
+        name="homeId"
+        value="<%= home._id %>">
+
+    <button
+        class="w-full mt-4 border-2 border-red-500 text-red-500 py-3 rounded-xl hover:bg-red-500 hover:text-white transition">
+
+        ❤️ Add to Favorites
+
+    </button>
+
+</form>
+
+<% } %>

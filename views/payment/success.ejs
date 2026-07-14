@@ -1,0 +1,49 @@
+<%- include('../partials/head') %>
+  </head>
+  <body>
+    <%- include('../partials/nav') %>
+<div class="container mx-auto mt-16 text-center">
+
+    <div class="text-7xl">
+        ✅
+    </div>
+
+    <h1 class="text-4xl font-bold text-green-600 mt-5">
+        Payment Successful
+    </h1>
+
+    <div class="mt-8 text-lg">
+
+        <p>
+            <strong>Transaction ID:</strong>
+            <%= paymentId %>
+        </p>
+
+        <p class="mt-3">
+            <strong>Amount Paid:</strong>
+            ₹<%= amount %>
+        </p>
+
+        <p class="mt-3">
+            <strong>Status:</strong>
+            Paid
+        </p>
+
+        <p class="mt-3">
+            <strong>Booking Date:</strong>
+            <%= new Date().toLocaleDateString() %>
+        </p>
+
+    </div>
+
+    <a
+        href="/bookings"
+        class="inline-block mt-8 bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-600">
+
+        Go To My Bookings
+
+    </a>
+
+</div>
+  </body>
+<%- include('../partials/footer') %>

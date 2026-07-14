@@ -1,0 +1,148 @@
+<%- include('../partials/head') %>
+    </head>
+
+    <body>
+        <%- include('../partials/nav') %>
+            <div class="min-h-screen bg-gray-100 py-10">
+
+                <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
+
+                    <div class="grid md:grid-cols-2">
+
+                        <!-- Left Side -->
+                        <div>
+                            <img src="<%= home.photoUrl %>" alt="<%= home.houseName %>"
+                                class="w-full h-full object-cover">
+                        </div>
+
+                        <!-- Right Side -->
+                        <div class="p-8">
+
+                            <h1 class="text-3xl font-bold text-gray-800">
+                                Booking Summary
+                            </h1>
+
+                            <p class="text-gray-500 mt-1">
+                                Review your booking before payment
+                            </p>
+
+                            <div class="mt-8">
+
+                                <h2 class="text-2xl font-semibold text-gray-800">
+                                    <%= home.houseName %>
+                                </h2>
+
+                                <p class="text-gray-500 mt-2">
+                                    Premium Stay
+                                </p>
+                                <div class="bg-red-50 border border-red-200 rounded-2xl p-6 mt-6">
+
+                                    <div class="grid grid-cols-2 gap-5">
+
+                                        <div>
+
+                                            <p class="text-gray-500">
+
+                                                Check In
+
+                                            </p>
+
+                                            <h3 class="font-semibold">
+
+                                                <%= checkIn %>
+
+                                            </h3>
+
+                                        </div>
+
+                                        <div>
+
+                                            <p class="text-gray-500">
+
+                                                Check Out
+
+                                            </p>
+
+                                            <h3 class="font-semibold">
+
+                                                <%= checkOut %>
+
+                                            </h3>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="flex justify-between">
+                                <span>Room Price</span>
+                                <span>₹<%= home.price %> × <%= nights %></span>
+                            </div>
+
+                            <div class="flex justify-between">
+                                <span>Subtotal</span>
+                                <span>₹<%= roomPrice %></span>
+                            </div>
+
+                            <div class="flex justify-between">
+                                <span>Cleaning Fee</span>
+                                <span>₹<%= cleaningFee %></span>
+                            </div>
+
+                            <div class="flex justify-between">
+                                <span>Service Fee</span>
+                                <span>₹<%= serviceFee %></span>
+                            </div>
+
+                            <hr class="my-4">
+
+                            <div class="flex justify-between text-xl font-bold">
+                                <span>Total</span>
+                                <span class="text-[#FF385C]">
+                                    ₹<%= totalPrice %>
+                                </span>
+                            </div>
+                            <div class="mt-8">
+
+                                <form action="/pay/<%= home._id %>" method="GET">
+                                    <input type="hidden" name="checkIn" value="<%= checkIn %>">
+
+                                    <input type="hidden" name="checkOut" value="<%= checkOut %>">
+
+                                    <button
+                                        class="w-full bg-red-500 hover:bg-red-600 transition duration-300 text-white py-4 rounded-xl text-lg font-semibold shadow-lg">
+
+                                        Pay Now →
+
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                            <div class="mt-6 flex items-center justify-center gap-2 text-gray-500 text-sm">
+
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-green-500" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
+
+                                </svg>
+
+                                Secure Checkout • Fake Payment Gateway
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+    </body>
+    <%- include('../partials/footer') %>

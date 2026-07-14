@@ -1,0 +1,155 @@
+<nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-lg border-b border-gray-200">
+
+    <div class="max-w-7xl mx-auto px-6">
+
+        <div class="h-20 flex justify-between items-center">
+
+            <!-- Logo -->
+
+            <a href="/" class="flex items-center gap-3">
+
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"
+                    class="w-9 h-9 text-[#FF385C]">
+
+                    <path d="M12 2l9 8v12h-6v-7H9v7H3V10z" />
+
+                </svg>
+
+                <div>
+
+                    <h1 class="text-3xl font-bold text-[#FF385C]">
+                        StayNest
+                    </h1>
+
+                    <p class="text-xs text-gray-500 -mt-1">
+                        Find your perfect stay
+                    </p>
+
+                </div>
+
+            </a>
+
+            <!-- Center -->
+
+            <% if (!isLoggedIn) { %>
+
+                <div class="hidden lg:flex flex-col items-center">
+
+                    <h2 class="text-lg font-semibold text-gray-800 tracking-wide">
+                        ✨ Discover • Book • Relax
+                    </h2>
+
+                    <p class="text-sm text-gray-500 mt-1">
+                        Find unique stays and unforgettable experiences.
+                    </p>
+
+                </div>
+
+                <% } else { %>
+
+                    <div class="hidden lg:flex items-center gap-8 font-medium">
+
+                        <a href="/" class="hover:text-[#FF385C] transition">
+
+                            🏠 Home
+
+                        </a>
+
+                        <% if (user.userType==="host" ) { %>
+
+                            <a href="/host/host-home-list" class="hover:text-[#FF385C] transition">
+
+                                🏡 Dashboard
+
+                            </a>
+
+                            <a href="/host/add-home" class="hover:text-[#FF385C] transition">
+
+                                ➕ Add Home
+
+                            </a>
+
+                            <% } %>
+
+                                <% if (user.userType==="guest" ) { %>
+
+                                    <a href="/favourites" class="hover:text-[#FF385C] transition">
+
+                                        ❤️ Favorites
+
+                                        <% if(favouriteCount> 0){ %>
+
+                                            <span class="bg-red-500 text-white text-xs px-2 py-1 rounded-full ml-1">
+
+                                                <%= favouriteCount %>
+
+                                            </span>
+
+                                            <% } %>
+
+                                    </a>
+
+                                    <a href="/bookings" class="hover:text-[#FF385C] transition">
+
+                                        📅 Bookings
+
+                                    </a>
+
+                                    <% } %>
+
+                                        <!-- Profile for ALL logged-in users -->
+                                   
+                    </div>
+
+                    <% } %>
+
+                        <!-- Right -->
+
+                        <div class="flex items-center gap-4">
+
+                            <% if(!isLoggedIn){ %>
+
+                                <a href="/login" class="px-5 py-2 rounded-full hover:bg-gray-100 transition">
+
+                                    Login
+
+                                </a>
+
+                                <a href="/signup"
+                                    class="bg-[#FF385C] text-white px-6 py-2 rounded-full hover:bg-[#E31C5F] transition">
+
+                                    Sign Up
+
+                                </a>
+
+                                <% } else { %>
+
+                                    <form action="/logout" method="POST">
+
+                                        <button
+                                            class="bg-[#FF385C] hover:bg-[#E31C5F] text-white px-6 py-2 rounded-full transition">
+
+                                            Logout
+
+                                        </button>
+
+                                    </form>
+                                     <div class="flex items-center gap-4">
+                                        <a href="/profile"
+                                            class="w-11 h-11 rounded-full border border-gray-300 hover:border-[#FF385C] hover:bg-red-50 flex items-center justify-center text-xl transition-all duration-300 shadow-sm hover:shadow-md"
+                                            title="My Profile">
+
+                                            👤
+
+                                        </a>
+                                    </div>
+
+                                    <% } %>
+
+                        </div>
+
+        </div>
+
+    </div>
+
+</nav>

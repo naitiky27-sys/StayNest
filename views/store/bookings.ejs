@@ -1,0 +1,262 @@
+<%- include('../partials/head') %>
+    </head>
+
+    <body class="bg-gray-50">
+        <%- include('../partials/nav') %>
+
+            <main class="max-w-7xl mx-auto px-6 py-10">
+                <div class="mb-10">
+                    <div class="flex items-end justify-between">
+                        <div>
+                            <h1 class="text-4xl font-bold text-gray-900 flex items-center gap-3">
+                                🏨 My Bookings
+                            </h1>
+                            <p class="text-gray-600 mt-2 text-lg">
+                                Manage all your hotel reservations in one place
+                            </p>
+                        </div>
+
+                        <div
+                            class="hidden sm:flex items-center gap-2 bg-white rounded-2xl p-1 shadow-sm border border-gray-100">
+                            <button onclick="filterBookings('all')"
+                                class="active-tab px-5 py-2.5 rounded-xl text-sm font-semibold text-gray-700">
+                                All Bookings
+                            </button>
+                            <button onclick="filterBookings('upcoming')"
+                                class="px-5 py-2.5 rounded-xl text-sm font-semibold text-gray-500 hover:text-gray-700 transition-colors">
+                                Upcoming
+                            </button>
+                            <button onclick="filterBookings('past')"
+                                class="px-5 py-2.5 rounded-xl text-sm font-semibold text-gray-500 hover:text-gray-700 transition-colors">
+                                Past
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-8" id="bookings-container">
+                    <% BookedHomes.forEach(booking=> { %>
+                        <% const home=booking.homeId; %>
+
+                            <div
+                                class="booking-card bg-white rounded-3xl shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100">
+                                <div class="flex flex-col lg:flex-row">
+
+                                    <!-- Image Section -->
+                                    <div class="lg:w-96 relative flex-shrink-0 group">
+                                        <img src="<%= home.photoUrl %>" alt="<%= home.houseName %>"
+                                            class="w-full h-72 lg:h-full object-cover transition-transform duration-500 group-hover:scale-105">
+
+                                        <div
+                                            class="absolute top-5 left-5 bg-white/95 backdrop-blur-md px-4 py-1.5 rounded-2xl flex items-center gap-2 shadow-sm">
+                                            <span class="text-amber-500">★</span>
+                                            <span class="font-semibold text-gray-800">
+                                                <%= home.rating %>
+                                            </span>
+                                        </div>
+
+                                        <div
+                                            class="absolute top-5 right-5 bg-green-600 text-white text-xs font-medium px-4 py-2 rounded-2xl flex items-center gap-1">
+                                            <span class="w-2 h-2 bg-white rounded-full animate-pulse"></span>
+                                            Confirmed
+                                        </div>
+
+                                        <!-- Image overlay gradient -->
+                                        <div
+                                            class="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/40 to-transparent">
+                                        </div>
+                                    </div>
+
+                                    <!-- Main Content -->
+                                    <div class="flex-1 p-8 flex flex-col">
+                                        <div class="flex-1">
+                                            <div class="flex items-start justify-between">
+                                                <div>
+                                                    <h2 class="text-2xl font-bold text-gray-900 leading-tight">
+                                                        <%= home.houseName %>
+                                                    </h2>
+                                                    <p class="flex items-center gap-2 text-gray-500 mt-2">
+                                                        <span class="text-red-500">📍</span>
+                                                        <%= home.location %>
+                                                    </p>
+                                                </div>
+
+                                                <div class="text-right">
+                                                    <div
+                                                        class="inline-flex items-center bg-emerald-100 text-emerald-700 px-4 py-2 rounded-2xl text-sm font-medium">
+                                                        <span class="text-lg">₹</span>
+                                                        <span class="text-2xl font-bold">
+                                                            <% const nights=Math.max( 1, Math.ceil( (new
+                                                                Date(booking.checkOut) - new Date(booking.checkIn)) /
+                                                                (1000 * 60 * 60 * 24) ) ); const cleaningFee=499; const
+                                                                serviceFee=299; const totalPrice=(home.price * nights) +
+                                                                cleaningFee + serviceFee; %>
+
+                                                                <%= totalPrice %>
+                                                        </span>
+                                                    </div>
+                                                    <p class="text-xs text-gray-500 mt-1">Total Paid</p>
+                                                </div>
+                                            </div>
+
+                                            <!-- Amenities -->
+                                            <div class="mt-8">
+                                                <p
+                                                    class="text-xs uppercase tracking-widest text-gray-400 font-medium mb-3">
+                                                    Amenities</p>
+                                                <div class="flex flex-wrap gap-2">
+                                                    <span class="amenity-tag">📶 Free WiFi</span>
+                                                    <span class="amenity-tag">🍳 Breakfast Included</span>
+                                                    <span class="amenity-tag">🚗 Free Parking</span>
+                                                    <span class="amenity-tag">🏊 Swimming Pool</span>
+                                                    <span class="amenity-tag">💪 Fitness Center</span>
+                                                    <span class="amenity-tag">🧴 Toiletries</span>
+                                                </div>
+                                            </div>
+
+                                            <!-- Description -->
+                                            <div class="mt-8 text-gray-600 leading-relaxed">
+                                                Spacious room with modern interiors, complimentary breakfast, high-speed
+                                                WiFi, air conditioning and exceptional hospitality.
+                                                Ideal for both business travelers and families.
+                                            </div>
+
+                                            <!-- Booking Info Grid -->
+                                            <div
+                                                class="mt-10 grid grid-cols-2 md:grid-cols-4 gap-6 bg-gray-50 rounded-2xl p-6 border border-gray-100">
+                                                <div>
+                                                    <p class="text-xs text-gray-500">Check-In</p>
+                                                    <p class="font-semibold text-gray-800 mt-1">
+                                                        <%= new Date(booking.checkIn).toLocaleDateString("en-IN", {
+                                                            weekday: "short" , day: "numeric" , month: "short" }) %>
+                                                    </p>
+                                                </div>
+                                                <div>
+                                                    <p class="text-xs text-gray-500">Check-Out</p>
+                                                    <p class="font-semibold text-gray-800 mt-1">
+                                                        <%= new Date(booking.checkOut).toLocaleDateString("en-IN", {
+                                                            weekday: "short" , day: "numeric" , month: "short" }) %>
+                                                    </p>
+                                                </div>
+                                                <div>
+                                                    <p class="text-xs text-gray-500">Guests</p>
+                                                    <p class="font-semibold text-gray-800 mt-1">2 Adults</p>
+                                                </div>
+                                                <div>
+                                                    <p class="text-xs text-gray-500">Status</p>
+                                                    <span
+                                                        class="inline-block mt-1 px-5 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded-2xl">
+                                                        <%= booking.paymentStatus %>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Bottom Bar -->
+                                        <div
+                                            class="mt-8 pt-6 border-t border-gray-100 flex items-center justify-between">
+                                            <div class="flex items-center gap-6 text-sm">
+                                                <div class="flex items-center gap-2 text-gray-500">
+                                                    <span
+                                                        class="font-mono text-xs bg-gray-100 px-3 py-1.5 rounded-xl">ID:
+                                                        <%= booking.paymentId %></span>
+                                                </div>
+                                                <div class="flex items-center gap-1.5 text-emerald-600">
+                                                    <span>✔</span>
+                                                    <span class="text-xs font-medium">Free Cancellation till 48
+                                                        hrs</span>
+                                                </div>
+                                            </div>
+
+                                            <form action="/bookings/delete/<%= home._id %>" method="POST"
+                                                class="inline">
+                                                <button type="submit"
+                                                    onclick="return confirm('Are you sure you want to cancel this booking?')"
+                                                    class="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-8 py-4 rounded-2xl font-semibold transition-all active:scale-95">
+                                                    <span>✕</span>
+                                                    Cancel Booking
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <% }) %>
+                </div>
+
+                <% if (BookedHomes.length===0) { %>
+                    <div class="text-center py-20">
+                        <div
+                            class="mx-auto w-20 h-20 bg-gray-100 rounded-3xl flex items-center justify-center text-4xl mb-6">
+                            🏨
+                        </div>
+                        <h3 class="text-2xl font-semibold text-gray-800">No bookings yet</h3>
+                        <p class="text-gray-500 mt-3 max-w-sm mx-auto">
+                            When you book a hotel, it will appear here
+                        </p>
+                        <a href="/homes"
+                            class="inline-block mt-8 bg-blue-600 text-white px-8 py-4 rounded-2xl font-semibold hover:bg-blue-700 transition">
+                            Browse Hotels
+                        </a>
+                    </div>
+                    <% } %>
+            </main>
+
+            <%- include('../partials/footer') %>
+
+                <style>
+                    .amenity-tag {
+                        background: #f8fafc;
+                        color: #475569;
+                        padding: 8px 16px;
+                        border-radius: 9999px;
+                        font-size: 13px;
+                        border: 1px solid #e2e8f0;
+                        transition: all 0.2s;
+                    }
+
+                    .amenity-tag:hover {
+                        background: #f1f5f9;
+                        transform: translateY(-1px);
+                    }
+
+                    .booking-card {
+                        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                    }
+
+                    .booking-card:hover {
+                        transform: translateY(-8px);
+                    }
+
+                    .active-tab {
+                        background: #1e40af;
+                        color: white !important;
+                        box-shadow: 0 10px 15px -3px rgb(30 64 175 / 0.1);
+                    }
+                </style>
+
+                <script>
+                    function filterBookings(type) {
+                        // Simple client-side filter (can be enhanced later)
+                        const cards = document.querySelectorAll('.booking-card');
+                        cards.forEach(card => {
+                            if (type === 'all') {
+                                card.style.display = 'block';
+                            } else {
+                                // Placeholder logic - in real app you would use actual dates
+                                card.style.display = 'block';
+                            }
+                        });
+
+                        // Update active tab
+                        document.querySelectorAll('button').forEach(btn => {
+                            btn.classList.remove('active-tab');
+                            if (btn.textContent.toLowerCase().includes(type)) {
+                                btn.classList.add('active-tab');
+                            }
+                        });
+                    }
+                </script>
+    </body>
+
+    </html>

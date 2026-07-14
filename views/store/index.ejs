@@ -1,0 +1,186 @@
+<%- include('../partials/head') %>
+    </head>
+
+    <body class="bg-gray-100">
+
+        <%- include('../partials/nav') %>
+
+            <main class="max-w-7xl mx-auto px-6 py-10">
+
+
+                <!-- Heading -->
+
+                <div class="text-center mb-12">
+
+                    <h1 class="text-5xl font-extrabold text-gray-800">
+                        Discover Amazing Places
+                    </h1>
+
+                    <p class="text-gray-500 mt-3 text-lg">
+                        Find your perfect stay anywhere in the world.
+                    </p>
+
+                </div>
+
+                <!-- Search -->
+
+                <form action="/" method="GET" class="max-w-3xl mx-auto mb-12">
+
+                    <div class="bg-white rounded-full shadow-lg flex items-center overflow-hidden">
+
+                        <div class="px-5 text-2xl">
+                            🔍
+                        </div>
+
+                        <input type="text" name="search" value="<%= search || '' %>"
+                            placeholder="Search by city (Goa, Manali, Jaipur...)"
+                            class="flex-1 py-4 pr-4 text-gray-700 outline-none placeholder:text-gray-400">
+                        <div class="border-l border-gray-300 h-8"></div>
+
+                        <input type="number" name="price" value="<%= price || '' %>" placeholder="Max Price"
+                            class="w-40 px-4 outline-none text-gray-700">
+
+                        <button type="submit"
+                            class="bg-[#FF385C] hover:bg-[#E31C5F] text-white px-8 py-4 font-semibold transition">
+
+                            Search
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+                <!-- Homes -->
+
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+
+                    <% registeredHomes.forEach(home=> { %>
+
+                        <div
+                            class="bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+
+                            <!-- Image -->
+
+                            <div class="relative overflow-hidden">
+
+                                <a href="/homes/<%= home._id %>">
+
+                                    <img src="<%= home.photoUrl %>" alt="<%= home.houseName %>"
+                                        class="w-full h-64 object-cover hover:scale-110 transition duration-500" />
+
+                                </a>
+
+                                <!-- Favourite -->
+
+                                <span
+                                    class="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold shadow">
+
+                                    ❤️ Guest Favourite
+
+                                </span>
+
+                                <!-- Rating -->
+
+                                <div
+                                    class="absolute top-4 right-4 bg-black/70 text-white px-3 py-1 rounded-full text-sm">
+
+                                    ⭐ <%= home.rating %>
+
+                                </div>
+
+                            </div>
+
+                            <!-- Content -->
+
+                            <div class="p-6">
+
+                                <h2 class="text-2xl font-bold text-gray-800">
+                                    <%= home.houseName %>
+                                </h2>
+
+                                <div class="flex items-center text-gray-500 mt-2">
+
+                                    📍
+
+                                    <span class="ml-2">
+                                        <%= home.location %>
+                                    </span>
+
+                                </div>
+
+                                <!-- Amenities -->
+
+                                <div class="flex flex-wrap gap-2 mt-5">
+
+                                    <span class="bg-green-100 text-green-700 text-xs px-3 py-1 rounded-full">
+                                        📶 WiFi
+                                    </span>
+
+                                    <span class="bg-blue-100 text-blue-700 text-xs px-3 py-1 rounded-full">
+                                        🍳 Breakfast
+                                    </span>
+
+                                    <span class="bg-yellow-100 text-yellow-700 text-xs px-3 py-1 rounded-full">
+                                        🚗 Parking
+                                    </span>
+
+                                </div>
+
+                                <!-- Price -->
+
+                                <div class="flex justify-between items-center mt-6">
+
+                                    <div>
+
+                                        <h2 class="text-3xl font-bold text-[#FF385C]">
+
+                                            ₹<%= home.price %>
+
+                                        </h2>
+
+                                        <p class="text-sm text-gray-500">
+
+                                            per night
+
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                                <!-- Button -->
+
+                                <% if (isLoggedIn) { %>
+
+                                    <a href="/homes/<%= home._id %>"
+                                        class="block w-full text-center bg-[#FF385C] hover:bg-[#E31C5F] text-white py-3 rounded-xl font-semibold mt-6 transition">
+
+                                        📅 Book Now
+
+                                    </a>
+
+                                    <% } else { %>
+
+                                        <a href="/login"
+                                            class="block w-full text-center bg-[#FF385C] hover:bg-[#E31C5F] text-white py-3 rounded-xl font-semibold mt-6 transition">
+
+                                            📅 Book Now
+
+                                        </a>
+
+                                        <% } %>
+
+                            </div>
+
+                        </div>
+
+                        <% }) %>
+
+                </div>
+
+            </main>
+            <%- include('../partials/footer') %>
+    </body>
+
+    </html>

@@ -1,0 +1,110 @@
+<%- include('../partials/head') %>
+  </head>
+  <body>
+    <%- include('../partials/nav') %>
+    <main class="max-w-7xl mx-auto px-6 py-10">
+        
+
+    <div class="text-center mb-12">
+        <h2 class="text-5xl font-extrabold text-gray-800">
+            Explore Our Homes
+        </h2>
+
+        <p class="text-gray-500 mt-3 text-lg">
+            Find your next perfect stay
+        </p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+
+        <% registeredHomes.forEach(home => { %>
+
+        <div
+            class="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+
+            <!-- Image -->
+
+            <div class="relative">
+
+                <img
+                    src="<%= home.photoUrl %>"
+                    alt="<%= home.houseName %>"
+                    class="w-full h-64 object-cover">
+
+                
+
+            </div>
+
+            <!-- Content -->
+
+            <div class="p-6">
+
+                <div class="flex justify-between items-start">
+
+                    <h3 class="text-2xl font-bold text-gray-800">
+                        <%= home.houseName %>
+                    </h3>
+
+                    <div class="flex items-center">
+
+                        ⭐
+
+                        <span class="ml-1 font-semibold">
+                            <%= home.rating %>
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <div class="flex items-center mt-3 text-gray-500">
+
+                    📍
+
+                    <span class="ml-2">
+                        <%= home.location %>
+                    </span>
+
+                </div>
+
+                <div class="mt-5">
+
+                    <span class="text-2xl font-bold text-[#FF385C]">
+
+                        ₹<%= home.price %>
+
+                    </span>
+
+                    <span class="text-gray-500">
+
+                        / night
+
+                    </span>
+
+                </div>
+
+                <div class="flex gap-3 mt-6">
+
+                    <a
+                        href="/homes/<%= home._id %>"
+                        class="flex-1 text-center bg-[#FF385C] hover:bg-[#E11D48] text-white py-3 rounded-xl font-semibold transition align items-center">
+
+                        View Details
+
+                    </a>
+
+                   
+                </div>
+
+            </div>
+
+        </div>
+
+        <% }) %>
+
+    </div>
+
+    </main>
+    <%- include('../partials/footer') %>
+  </body>
+</html>

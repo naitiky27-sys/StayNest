@@ -1,0 +1,49 @@
+const mongoose = require('mongoose');
+
+const homeSchema = mongoose.Schema({
+  houseName: {
+    type: String,
+    required: true
+  },
+  price: {
+    type: Number,
+    required: true
+  },
+  location: {
+    type: String,
+    required: true
+  },
+  rating: {
+    type: Number,
+    required: true
+  },
+  photoUrl: String,
+  description: String,
+  reviews: [
+    {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Review",
+    },
+  ],
+  geometry: {
+    type: {
+      type: String,
+      enum: ['Point'], // Must strictly be 'Point'
+      required: true
+    },
+    coordinates: {
+      type: [Number], // An array of numbers: [longitude, latitude]
+      required: true
+    }
+  }
+});
+
+
+// homeSchema.pre('findOneAndDelete', async function(next) {
+//   console.log('Came to pre hook while deleting a home');
+//   const homeId = this.getQuery()._id;
+//   await favourite.deleteMany({houseId: homeId});
+//   next();
+// });
+
+module.exports = mongoose.model('Home', homeSchema);

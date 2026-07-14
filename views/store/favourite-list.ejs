@@ -1,0 +1,123 @@
+<%- include('../partials/head') %>
+  </head>
+  <body>
+    <%- include('../partials/nav') %>
+    <main class="max-w-7xl mx-auto px-6 py-10">
+        
+
+    <div class="text-center mb-12">
+        <h2 class="text-5xl font-extrabold text-gray-800">
+            ❤️ Your Favourite Homes
+        </h2>
+
+        <p class="text-gray-500 mt-3 text-lg">
+            All the places you've saved in one place
+        </p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+
+        <% favouriteHomes.forEach(home => { %>
+
+        <div
+            class="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+
+            <!-- Image -->
+
+            <div class="relative">
+
+                <img
+                    src="<%= home.photoUrl %>"
+                    alt="<%= home.houseName %>"
+                    class="w-full h-64 object-cover">
+
+                <!-- Favourite Badge -->
+
+                <span
+                    class="absolute top-4 left-4 bg-white px-3 py-1 rounded-full text-xs font-semibold shadow">
+
+                    ❤️ Favourite
+
+                </span>
+
+                <!-- Remove Favourite -->
+
+                <form
+                    action="/favourites/delete/<%= home._id %>"
+                    method="POST"
+                    class="absolute top-4 right-4">
+
+                    <button
+                        type="submit"
+                        class="bg-white rounded-full w-10 h-10 flex items-center justify-center shadow-lg hover:bg-red-100 transition">
+
+                        ❤️
+
+                    </button>
+
+                </form>
+
+            </div>
+
+            <!-- Content -->
+
+            <div class="p-6">
+
+                <div class="flex justify-between items-start">
+
+                    <h3 class="text-2xl font-bold text-gray-800">
+                        <%= home.houseName %>
+                    </h3>
+
+                    <div class="flex items-center">
+
+                        ⭐
+
+                        <span class="ml-1 font-semibold text-gray-700">
+                            <%= home.rating %>
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <div class="flex items-center mt-3 text-gray-500">
+
+                    📍
+
+                    <span class="ml-2">
+                        <%= home.location %>
+                    </span>
+
+                </div>
+
+                <div class="mt-5">
+
+                    <span class="text-2xl font-bold text-[#FF385C]">
+                        ₹<%= home.price %>
+                    </span>
+
+                    <span class="text-gray-500">
+                        / night
+                    </span>
+
+                </div>
+
+                <!-- Book Now Button -->
+
+                <%- include('../partials/bookings',
+                  {home: home}) %>
+                
+
+            </div>
+
+        </div>
+
+        <% }) %>
+
+    </div>
+
+</main>
+<%- include('../partials/footer') %>
+  </body>
+</html>

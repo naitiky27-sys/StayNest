@@ -1,0 +1,58 @@
+<% if (typeof bookingError !=='undefined' && bookingError) { %>
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-xl mb-4" role="alert">
+        <strong class="font-bold">Not available:</strong>
+        <span>This home is already booked for some or all of the selected dates. Please try different dates.</span>
+    </div>
+    <% } %>
+
+        <% if (typeof isLoggedIn !=='undefined' && isLoggedIn) { %>
+            <form action="/checkout/<%= home._id %>" method="GET">
+                <div class="grid grid-cols-2 gap-4 mb-5">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">
+                            📅 Check In
+                        </label>
+                        <input type="date" id="checkIn" name="checkIn"
+                            min="<%= new Date().toISOString().split('T')[0] %>" required
+                            class="w-full border rounded-xl p-3 focus:ring-2 focus:ring-red-400 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">
+                            📅 Check Out
+                        </label>
+                        <input type="date" id="checkOut" name="checkOut"
+                            min="<%= new Date().toISOString().split('T')[0] %>" required
+                            class="w-full border rounded-xl p-3 focus:ring-2 focus:ring-red-400 outline-none">
+                    </div>
+                </div>
+                <button
+                    class="w-full flex items-center justify-center gap-3 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold text-lg py-4 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02]">
+                    🗓️ Reserve Now
+                </button>
+            </form>
+
+            <script>
+                const checkInInput = document.getElementById('checkIn');
+                const checkOutInput = document.getElementById('checkOut');
+
+                checkInInput.addEventListener('change', function () {
+                    if (checkInInput.value) {
+                        // Set the minimum check-out date to be at least the check-in date
+                        checkOutInput.min = checkInInput.value;
+
+                        // If the current check-out date is before the new check-in, clear it
+                        if (checkOutInput.value && checkOutInput.value < checkInInput.value) {
+                            checkOutInput.value = '';
+                        }
+                    }
+                });
+            </script>
+
+            <% } else { %>
+                <form action="/login" method="GET">
+                    <button
+                        class="w-full flex items-center justify-center gap-3 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold text-lg py-4 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02]">
+                        🗓️ Login to Reserve
+                    </button>
+                </form>
+                <% } %>
