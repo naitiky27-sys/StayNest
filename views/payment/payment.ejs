@@ -8,596 +8,374 @@
             <div class="max-w-7xl mx-auto px-6 py-12">
 
                 <div class="mb-10">
-
                     <h1 class="text-4xl font-bold text-gray-900 tracking-tight">
                         Secure Checkout
                     </h1>
-
                     <p class="text-gray-500 mt-2">
                         Complete your booking using our secure payment gateway.
                     </p>
-
                 </div>
 
                 <div class="grid lg:grid-cols-3 gap-8 items-start">
 
-                    <!-- LEFT -->
-
                     <div class="lg:col-span-2">
-
                         <div class="bg-white rounded-3xl shadow-sm ring-1 ring-gray-100 p-8">
-
                             <div class="flex items-center justify-between flex-wrap gap-3">
-
                                 <h2 class="text-2xl font-bold text-gray-900">
                                     Payment Method
                                 </h2>
-
                                 <div
                                     class="bg-green-50 text-green-700 px-4 py-2 rounded-full text-sm font-semibold inline-flex items-center gap-1">
-
                                     🔒 SSL Secure
-
                                 </div>
-
                             </div>
 
                             <p class="text-gray-500 mt-2">
                                 Choose your preferred payment option.
                             </p>
 
-                            <% if (typeof paymentError !== 'undefined' && paymentError) { %>
-                                <div class="mt-6 bg-red-50 border border-red-300 text-red-700 rounded-xl p-4 text-sm font-medium">
+                            <% if (typeof paymentError !=='undefined' && paymentError) { %>
+                                <div
+                                    class="mt-6 bg-red-50 border border-red-300 text-red-700 rounded-xl p-4 text-sm font-medium">
                                     ⚠ <%= paymentError %>
                                 </div>
-                            <% } %>
-
-
-
-                            <form action="/pay/<%= home._id %>" method="POST">
-                                <input type="hidden" id="paymentMethodInput" value="card">
-
-                                <input type="hidden" name="checkIn" value="<%= checkIn %>">
-
-                                <input type="hidden" name="checkOut" value="<%= checkOut %>">
-                                <div class="grid md:grid-cols-2 gap-4 mt-8">
-
-                                    <!-- Card -->
-
-                                    <label
-                                        class="payment-option border-2 border-red-500 bg-red-50 rounded-2xl p-5 cursor-pointer">
-
-                                        <input type="radio" name="paymentMethod" value="card" checked class="hidden">
-
-                                        <div class="flex items-center gap-4">
-
-                                            <div
-                                                class="w-14 h-14 rounded-full bg-red-100 flex items-center justify-center text-3xl">
-                                                💳
-                                            </div>
-
-                                            <div>
-
-                                                <h3 class="font-bold">
-                                                    Card
-                                                </h3>
-
-                                                <p class="text-sm text-gray-500">
-                                                    Visa • Mastercard • RuPay
-                                                </p>
-
-                                            </div>
-
-                                        </div>
-
-                                    </label>
-
-                                    <!-- UPI -->
-
-                                    <label
-                                        class="payment-option border-2 border-gray-200 rounded-2xl p-5 cursor-pointer">
-
-                                        <input type="radio" name="paymentMethod" value="upi" class="hidden">
-
-                                        <div class="flex items-center gap-4">
-
-                                            <div
-                                                class="w-14 h-14 rounded-full bg-blue-100 flex items-center justify-center text-3xl">
-                                                📱
-                                            </div>
-
-                                            <div>
-
-                                                <h3 class="font-bold">
-                                                    UPI
-                                                </h3>
-
-                                                <p class="text-sm text-gray-500">
-                                                    Google Pay • PhonePe • Paytm
-                                                </p>
-
-                                            </div>
-
-                                        </div>
-
-                                    </label>
-
-                                    <!-- Net Banking -->
-
-                                    <label
-                                        class="payment-option border-2 border-gray-200 rounded-2xl p-5 cursor-pointer">
-
-                                        <input type="radio" name="paymentMethod" value="netbanking" class="hidden">
-
-                                        <div class="flex items-center gap-4">
-
-                                            <div
-                                                class="w-14 h-14 rounded-full bg-green-100 flex items-center justify-center text-3xl">
-                                                🏦
-                                            </div>
-
-                                            <div>
-
-                                                <h3 class="font-bold">
-                                                    Net Banking
-                                                </h3>
-
-                                                <p class="text-sm text-gray-500">
-                                                    SBI • HDFC • ICICI
-                                                </p>
-
-                                            </div>
-
-                                        </div>
-
-                                    </label>
-
-                                    <!-- Wallet -->
-
-                                    <label
-                                        class="payment-option border-2 border-gray-200 rounded-2xl p-5 cursor-pointer">
-
-                                        <input type="radio" name="paymentMethod" value="wallet" class="hidden">
-
-                                        <div class="flex items-center gap-4">
-
-                                            <div
-                                                class="w-14 h-14 rounded-full bg-yellow-100 flex items-center justify-center text-3xl">
-                                                👛
-                                            </div>
-
-                                            <div>
-
-                                                <h3 class="font-bold">
-                                                    Wallet
-                                                </h3>
-
-                                                <p class="text-sm text-gray-500">
-                                                    Amazon Pay • Paytm
-                                                </p>
-
-                                            </div>
-
-                                        </div>
-
-                                    </label>
-
-                                </div>
-
-                                <div class="bg-red-50 border border-red-100 rounded-2xl p-6 mt-8">
-
-                                    <h2 class="text-lg font-bold mb-4 text-gray-900">
-
-                                        📅 Booking Details
-
-                                    </h2>
-
-                                    <div class="grid grid-cols-2 gap-6">
-
-                                        <div>
-
-                                            <p class="text-gray-500 text-sm">
-
-                                                Check In
-
-                                            </p>
-
-                                            <h3 class="font-semibold text-gray-900">
-
-                                                <%= new Date(checkIn).toDateString() %>
-
-                                            </h3>
-
-                                        </div>
-
-                                        <div>
-
-                                            <p class="text-gray-500 text-sm">
-
-                                                Check Out
-
-                                            </p>
-
-                                            <h3 class="font-semibold text-gray-900">
-
-                                                <%= new Date(checkOut).toDateString() %>
-
-                                            </h3>
-
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-                                <!-- Card Payment -->
-
-                                <div id="cardSection" class="mt-8">
-
-                                    <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
-
-                                        <h3
-                                            class="text-lg font-semibold mb-5 flex items-center gap-2 text-gray-900">
-                                            💳 Card Details
-                                        </h3>
-
-                                        <div class="space-y-5">
-
-                                            <div>
-
-                                                <label class="block text-sm font-medium text-gray-600 mb-2">
-                                                    Card Number
-                                                </label>
-
-                                                <input type="text" name="cardNumber"
-                                                    placeholder="1234 5678 9012 3456" maxlength="19" required
-                                                    class="w-full rounded-xl border border-gray-300 bg-white p-4 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition">
-
-                                            </div>
-
-                                            <div>
-
-                                                <label class="block text-sm font-medium text-gray-600 mb-2">
-                                                    Card Holder
-                                                </label>
-
-                                                <input type="text" name="cardHolder" placeholder="John Doe" required
-                                                    class="w-full rounded-xl border border-gray-300 bg-white p-4 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition">
-
-                                            </div>
-
-                                            <div class="grid grid-cols-2 gap-5">
-
-                                                <div>
-
-                                                    <label class="block text-sm font-medium text-gray-600 mb-2">
-                                                        Expiry
-                                                    </label>
-
-                                                    <input type="text" name="expiry" placeholder="MM/YY" required
-                                                        pattern="(0[1-9]|1[0-2])/\d{2}"
-                                                        class="w-full rounded-xl border border-gray-300 bg-white p-4 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition">
-
+                                <% } %>
+
+                                    <form action="/pay/<%= home._id %>" method="POST">
+                                        <input type="hidden" name="paymentMethodUsed" id="paymentMethodInput"
+                                            value="card">
+                                        <input type="hidden" name="checkIn" value="<%= checkIn %>">
+                                        <input type="hidden" name="checkOut" value="<%= checkOut %>">
+
+                                        <div class="grid md:grid-cols-2 gap-4 mt-8">
+                                            <label
+                                                class="payment-option border-2 border-red-500 bg-red-50 rounded-2xl p-5 cursor-pointer">
+                                                <input type="radio" name="paymentMethod" value="card" checked
+                                                    class="hidden">
+                                                <div class="flex items-center gap-4">
+                                                    <div
+                                                        class="w-14 h-14 rounded-full bg-red-100 flex items-center justify-center text-3xl">
+                                                        💳
+                                                    </div>
+                                                    <div>
+                                                        <h3 class="font-bold">Card</h3>
+                                                        <p class="text-sm text-gray-500">Visa • Mastercard • RuPay</p>
+                                                    </div>
                                                 </div>
+                                            </label>
 
-                                                <div>
-
-                                                    <label class="block text-sm font-medium text-gray-600 mb-2">
-                                                        CVV
-                                                    </label>
-
-                                                    <input type="password" name="cvv" placeholder="123" required
-                                                        pattern="\d{3,4}" maxlength="4"
-                                                        class="w-full rounded-xl border border-gray-300 bg-white p-4 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition">
-
+                                            <label
+                                                class="payment-option border-2 border-gray-200 rounded-2xl p-5 cursor-pointer">
+                                                <input type="radio" name="paymentMethod" value="upi" class="hidden">
+                                                <div class="flex items-center gap-4">
+                                                    <div
+                                                        class="w-14 h-14 rounded-full bg-blue-100 flex items-center justify-center text-3xl">
+                                                        📱
+                                                    </div>
+                                                    <div>
+                                                        <h3 class="font-bold">UPI</h3>
+                                                        <p class="text-sm text-gray-500">Google Pay • PhonePe • Paytm
+                                                        </p>
+                                                    </div>
                                                 </div>
+                                            </label>
 
+                                            <label
+                                                class="payment-option border-2 border-gray-200 rounded-2xl p-5 cursor-pointer">
+                                                <input type="radio" name="paymentMethod" value="netbanking"
+                                                    class="hidden">
+                                                <div class="flex items-center gap-4">
+                                                    <div
+                                                        class="w-14 h-14 rounded-full bg-green-100 flex items-center justify-center text-3xl">
+                                                        🏦
+                                                    </div>
+                                                    <div>
+                                                        <h3 class="font-bold">Net Banking</h3>
+                                                        <p class="text-sm text-gray-500">SBI • HDFC • ICICI</p>
+                                                    </div>
+                                                </div>
+                                            </label>
+
+                                            <label
+                                                class="payment-option border-2 border-gray-200 rounded-2xl p-5 cursor-pointer">
+                                                <input type="radio" name="paymentMethod" value="wallet" class="hidden">
+                                                <div class="flex items-center gap-4">
+                                                    <div
+                                                        class="w-14 h-14 rounded-full bg-yellow-100 flex items-center justify-center text-3xl">
+                                                        👛
+                                                    </div>
+                                                    <div>
+                                                        <h3 class="font-bold">Wallet</h3>
+                                                        <p class="text-sm text-gray-500">Amazon Pay • Paytm</p>
+                                                    </div>
+                                                </div>
+                                            </label>
+                                        </div>
+
+                                        <div id="cardSection" class="mt-8">
+                                            <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+                                                <h3
+                                                    class="text-lg font-semibold mb-5 flex items-center gap-2 text-gray-900">
+                                                    💳 Card Details
+                                                </h3>
+                                                <div class="space-y-5">
+                                                    <div>
+                                                        <label class="block text-sm font-medium text-gray-600 mb-2">Card
+                                                            Number</label>
+                                                        <input type="text" name="cardNumber"
+                                                            placeholder="1234 5678 9012 3456" maxlength="19"
+                                                            class="w-full rounded-xl border border-gray-300 bg-white p-4 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition">
+                                                    </div>
+                                                    <div>
+                                                        <label class="block text-sm font-medium text-gray-600 mb-2">Card
+                                                            Holder</label>
+                                                        <input type="text" name="cardHolder" placeholder="John Doe"
+                                                            class="w-full rounded-xl border border-gray-300 bg-white p-4 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition">
+                                                    </div>
+                                                    <div class="grid grid-cols-2 gap-5">
+                                                        <div>
+                                                            <label
+                                                                class="block text-sm font-medium text-gray-600 mb-2">Expiry</label>
+                                                            <input type="text" name="expiry" placeholder="MM/YY"
+                                                                pattern="(0[1-9]|1[0-2])/\d{2}"
+                                                                class="w-full rounded-xl border border-gray-300 bg-white p-4 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition">
+                                                        </div>
+                                                        <div>
+                                                            <label
+                                                                class="block text-sm font-medium text-gray-600 mb-2">CVV</label>
+                                                            <input type="password" name="cvv" placeholder="123"
+                                                                pattern="\d{3,4}" maxlength="4"
+                                                                class="w-full rounded-xl border border-gray-300 bg-white p-4 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition">
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-
                                         </div>
 
-                                    </div>
-
-                                </div>
-
-                                <!-- UPI -->
-
-                                <div id="upiSection" class="hidden mt-8">
-
-                                    <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
-
-                                        <h3 class="text-lg font-semibold mb-5 text-gray-900">
-                                            📱 UPI Payment
-                                        </h3>
-
-                                        <input type="text" name="upiId" placeholder="example@upi" required
-                                            pattern="[\w.\-]+@[\w.\-]+"
-                                            class="w-full rounded-xl border border-gray-300 bg-white p-4 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition">
-
-                                    </div>
-
-                                </div>
-
-                                <!-- Net Banking -->
-
-                                <div id="netSection" class="hidden mt-8">
-
-                                    <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
-
-                                        <h3 class="text-lg font-semibold mb-5 text-gray-900">
-                                            🏦 Choose Bank
-                                        </h3>
-
-                                        <select name="bank" required
-                                            class="w-full rounded-xl border border-gray-300 bg-white p-4 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition">
-
-                                            <option value="">Select Bank</option>
-                                            <option>State Bank of India</option>
-                                            <option>HDFC Bank</option>
-                                            <option>ICICI Bank</option>
-                                            <option>Axis Bank</option>
-                                            <option>Punjab National Bank</option>
-
-                                        </select>
-
-                                    </div>
-
-                                </div>
-
-                                <!-- Wallet -->
-
-                                <div id="walletSection" class="hidden mt-8">
-
-                                    <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
-
-                                        <h3 class="text-lg font-semibold mb-5 text-gray-900">
-                                            👛 Select Wallet
-                                        </h3>
-
-                                        <div class="grid grid-cols-2 gap-4">
-
-                                            <label
-                                                class="border border-gray-200 rounded-xl p-4 cursor-pointer hover:border-red-400 transition flex items-center gap-2 text-gray-700 font-medium">
-
-                                                <input type="radio" name="wallet" value="Paytm" class="hidden">
-
-                                                👛 Paytm
-
-                                            </label>
-
-                                            <label
-                                                class="border border-gray-200 rounded-xl p-4 cursor-pointer hover:border-red-400 transition flex items-center gap-2 text-gray-700 font-medium">
-
-                                                <input type="radio" name="wallet" value="PhonePe" class="hidden">
-
-                                                📱 PhonePe
-
-                                            </label>
-
-                                            <label
-                                                class="border border-gray-200 rounded-xl p-4 cursor-pointer hover:border-red-400 transition flex items-center gap-2 text-gray-700 font-medium">
-
-                                                <input type="radio" name="wallet" value="Amazon Pay" class="hidden">
-
-                                                💳 Amazon Pay
-
-                                            </label>
-
-                                            <label
-                                                class="border border-gray-200 rounded-xl p-4 cursor-pointer hover:border-red-400 transition flex items-center gap-2 text-gray-700 font-medium">
-
-                                                <input type="radio" name="wallet" value="Mobikwik" class="hidden">
-
-                                                💰 Mobikwik
-
-                                            </label>
-
+                                        <div id="upiSection" class="hidden mt-8">
+                                            <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+                                                <h3 class="text-lg font-semibold mb-5 text-gray-900">📱 UPI Payment</h3>
+                                                <input type="text" name="upiId" placeholder="example@upi"
+                                                    pattern="[\w.\-]+@[\w.\-]+"
+                                                    class="w-full rounded-xl border border-gray-300 bg-white p-4 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition">
+                                            </div>
                                         </div>
 
-                                    </div>
+                                        <div id="netSection" class="hidden mt-8">
+                                            <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+                                                <h3 class="text-lg font-semibold mb-5 text-gray-900">🏦 Choose Bank</h3>
+                                                <select name="bank"
+                                                    class="w-full rounded-xl border border-gray-300 bg-white p-4 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition">
+                                                    <option value="">Select Bank</option>
+                                                    <option>State Bank of India</option>
+                                                    <option>HDFC Bank</option>
+                                                    <option>ICICI Bank</option>
+                                                    <option>Axis Bank</option>
+                                                    <option>Punjab National Bank</option>
+                                                </select>
+                                            </div>
+                                        </div>
 
-                                </div>
+                                        <div id="walletSection" class="hidden mt-8">
+                                            <div class="grid grid-cols-2 gap-4">
+                                                <label
+                                                    class="wallet-option border-2 border-gray-200 rounded-xl p-4 cursor-pointer transition flex items-center gap-2 font-medium">
+                                                    <input type="radio" name="wallet" value="Paytm" class="hidden">
+                                                    👛 Paytm
+                                                </label>
+                                                <label
+                                                    class="wallet-option border-2 border-gray-200 rounded-xl p-4 cursor-pointer transition flex items-center gap-2 font-medium">
+                                                    <input type="radio" name="wallet" value="PhonePe" class="hidden">
+                                                    📱 PhonePe
+                                                </label>
+                                                <label
+                                                    class="wallet-option border-2 border-gray-200 rounded-xl p-4 cursor-pointer transition flex items-center gap-2 font-medium">
+                                                    <input type="radio" name="wallet" value="Amazon Pay" class="hidden">
+                                                    💳 Amazon Pay
+                                                </label>
+                                                <label
+                                                    class="wallet-option border-2 border-gray-200 rounded-xl p-4 cursor-pointer transition flex items-center gap-2 font-medium">
+                                                    <input type="radio" name="wallet" value="Mobikwik" class="hidden">
+                                                    💰 Mobikwik
+                                                </label>
+                                            </div>
+                                        </div>
 
-                                <!-- Pay Button -->
+                                        <div class="bg-red-50 border border-red-100 rounded-2xl p-6 mt-8">
+                                            <h2 class="text-lg font-bold mb-4 text-gray-900">📅 Booking Details</h2>
+                                            <div class="grid grid-cols-2 gap-6">
+                                                <div>
+                                                    <p class="text-gray-500 text-sm">Check In</p>
+                                                    <h3 class="font-semibold text-gray-900">
+                                                        <%= new Date(checkIn).toDateString() %>
+                                                    </h3>
+                                                </div>
+                                                <div>
+                                                    <p class="text-gray-500 text-sm">Check Out</p>
+                                                    <h3 class="font-semibold text-gray-900">
+                                                        <%= new Date(checkOut).toDateString() %>
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                                <div class="mt-10">
+                                        <div class="mt-10">
+                                            <button type="submit"
+                                                class="w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white py-4 rounded-xl font-semibold text-lg shadow-lg shadow-red-200 hover:shadow-xl transition-all duration-300">
+                                                🔒 Pay Securely ₹<%= totalPrice %>
+                                            </button>
+                                        </div>
 
-                                    <button type="submit"
-                                        class="w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white py-4 rounded-xl font-semibold text-lg shadow-lg shadow-red-200 hover:shadow-xl transition-all duration-300">
-
-                                        🔒 Pay Securely ₹<%= totalPrice %>
-
-                                    </button>
-
-                                </div>
-
-                                <div class="mt-6 flex justify-center gap-8 text-sm text-gray-500 flex-wrap">
-
-                                    <div>🔒 SSL Secure</div>
-
-                                    <div>🛡️ Safe Payment</div>
-
-                                    <div>⚡ Instant Confirmation</div>
-
-                                </div>
-
-                            </form>
-
+                                        <div class="mt-6 flex justify-center gap-8 text-sm text-gray-500 flex-wrap">
+                                            <div>🔒 SSL Secure</div>
+                                            <div>🛡️ Safe Payment</div>
+                                            <div>⚡ Instant Confirmation</div>
+                                        </div>
+                                    </form>
                         </div>
-
                     </div>
 
-                    <!-- RIGHT SIDE -->
-
                     <div class="lg:sticky lg:top-8">
-
                         <div class="bg-white rounded-3xl shadow-sm ring-1 ring-gray-100 p-8">
-
-                            <h2 class="text-xl font-bold text-gray-900 mb-6">
-
-                                Order Summary
-
-                            </h2>
-
+                            <h2 class="text-xl font-bold text-gray-900 mb-6">Order Summary</h2>
                             <div class="space-y-4">
-
                                 <div class="flex justify-between text-gray-600">
-
                                     <span>Property</span>
-
                                     <span class="font-semibold text-gray-900">
                                         <%= home.houseName %>
                                     </span>
-
                                 </div>
-
                                 <div class="flex justify-between text-gray-600">
-
                                     <span>Price / Night</span>
-
                                     <span>₹<%= home.price %></span>
-
                                 </div>
-
                                 <div class="flex justify-between text-gray-600">
-
                                     <span>Check In</span>
-
                                     <span>
                                         <%= new Date(checkIn).toDateString() %>
                                     </span>
-
                                 </div>
-
                                 <div class="flex justify-between text-gray-600">
-
                                     <span>Check Out</span>
-
                                     <span>
                                         <%= new Date(checkOut).toDateString() %>
                                     </span>
-
                                 </div>
-
                                 <div class="flex justify-between">
                                     <span>Room Price</span>
                                     <span>₹<%= home.price %> × <%= nights %></span>
                                 </div>
-
                                 <div class="flex justify-between">
                                     <span>Subtotal</span>
                                     <span>₹<%= roomPrice %></span>
                                 </div>
-
                                 <div class="flex justify-between">
                                     <span>Cleaning Fee</span>
                                     <span>₹<%= cleaningFee %></span>
                                 </div>
-
                                 <div class="flex justify-between">
                                     <span>Service Fee</span>
                                     <span>₹<%= serviceFee %></span>
                                 </div>
-
                                 <hr class="my-4">
-
                                 <div class="flex justify-between text-xl font-bold">
                                     <span>Total</span>
-                                    <span class="text-[#FF385C]">
-                                        ₹<%= totalPrice %>
-                                    </span>
+                                    <span class="text-[#FF385C]">₹<%= totalPrice %></span>
                                 </div>
-
                             </div>
 
                             <div class="border-t border-dashed border-gray-300 my-6"></div>
-
-
-
                             <div class="mt-8 space-y-3 text-sm text-gray-500">
-
                                 <p>✅ Instant Booking Confirmation</p>
-
                                 <p>🔒 256-bit SSL Encryption</p>
-
                                 <p>🛡 Secure Payment Gateway</p>
-
                                 <p>⭐ Trusted by thousands of travellers</p>
-
                             </div>
-
                         </div>
-
                     </div>
 
                 </div>
-
             </div>
 
             <script>
-
-                const methods = document.querySelectorAll(
-                    'input[name="paymentMethod"]'
-                );
-
-                const options =
-                    document.querySelectorAll(".payment-option");
+                const methods = document.querySelectorAll('input[name="paymentMethod"]');
+                const options = document.querySelectorAll(".payment-option");
 
                 const sections = {
-
                     card: document.getElementById("cardSection"),
-
                     upi: document.getElementById("upiSection"),
-
                     netbanking: document.getElementById("netSection"),
-
-                    wallet: document.getElementById("walletSection")
-
+                    wallet: document.getElementById("walletSection") // Matches HTML perfectly now
                 };
 
-                function showSection(value) {
+                // Enable/Disable required fields so hidden ones don't break HTML5 validation
+                function toggleRequired(section, enable) {
+                    if (!section) return;
+                    const fields = section.querySelectorAll("input, select");
+                    fields.forEach(field => {
+                        if (enable) {
+                            field.setAttribute("required", "required");
+                        } else {
+                            field.removeAttribute("required");
+                        }
+                    });
+                }
 
+                // Show selected payment section
+                function showSection(value) {
                     document.getElementById("paymentMethodInput").value = value;
 
-                    Object.values(sections).forEach(section => {
-                        section.classList.add("hidden");
+                    Object.keys(sections).forEach(key => {
+                        if (sections[key]) {
+                            sections[key].classList.add("hidden");
+                            toggleRequired(sections[key], false);
+                        }
                     });
 
-                    sections[value].classList.remove("hidden");
+                    if (sections[value]) {
+                        sections[value].classList.remove("hidden");
+                        toggleRequired(sections[value], true);
+                    }
 
                     options.forEach(option => {
-                        option.classList.remove(
-                            "border-red-500",
-                            "bg-red-50"
-                        );
+                        option.classList.remove("border-red-500", "bg-red-50", "shadow-lg", "scale-[1.02]");
                         option.classList.add("border-gray-200");
                     });
 
-                    const active = document.querySelector(
-                        `input[value="${value}"]`
-                    ).parentElement;
-
-                    active.classList.remove("border-gray-200");
-
-                    active.classList.add(
-                        "border-red-500",
-                        "bg-red-50"
-                    );
-
+                    const activeInput = document.querySelector(`input[name="paymentMethod"][value="${value}"]`);
+                    if (activeInput) {
+                        const active = activeInput.closest('.payment-option');
+                        active.classList.remove("border-gray-200");
+                        active.classList.add("border-red-500", "bg-red-50", "shadow-lg", "scale-[1.02]");
+                    }
                 }
 
                 methods.forEach(method => {
-
                     method.addEventListener("change", () => {
-
                         showSection(method.value);
-
                     });
-
                 });
 
+                // Initialize default view
                 showSection("card");
 
+                // Wallet Radio Trigger Fix
+                const walletOptions = document.querySelectorAll(".wallet-option");
+                walletOptions.forEach(option => {
+                    option.addEventListener("click", () => {
+                        walletOptions.forEach(item => {
+                            item.classList.remove("border-red-500", "bg-red-50", "shadow-md", "scale-105");
+                            item.classList.add("border-gray-200");
+                        });
+
+                        option.classList.remove("border-gray-200");
+                        option.classList.add("border-red-500", "bg-red-50", "shadow-md", "scale-105");
+
+                        // Programmatically check the radio input within the custom container element
+                        const radio = option.querySelector('input[type="radio"]');
+                        if (radio) radio.checked = true;
+                    });
+                });
             </script>
 
             <%- include('../partials/footer') %>
@@ -605,4 +383,3 @@
     </body>
 
     </html>
-
