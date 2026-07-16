@@ -173,7 +173,7 @@ function toScriptJSON(value) {
 exports.getHomeDetails = async (req, res, next) => {
   try {
     const homeId = req.params.homeId;
-    const home = await Home.findById(homeId);
+    const home = await Home.findById(homeId).populate("reviews");
 
     
     if (!home) {
