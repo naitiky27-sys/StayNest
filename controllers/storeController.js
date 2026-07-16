@@ -94,27 +94,24 @@ exports.postRemoveFromFavourite = async (req, res, next) => {
 
 /*bookings*/
 
-const Booking = require("../models/booking"); 
+const Booking = require("../models/booking");
 
 // controllers/storeController.js
 exports.getBookings = async (req, res, next) => {
   try {
-  
-    let userBookings = await Booking.find({ userId: req.session.user._id })
-                                    .populate({
-                                      path: 'homeId',
-                                      options: { strictPopulate: false }
-                                      
-                                    });
+    let userBookings = await Booking.find({
+      userId: req.session.user._id,
+    }).populate({
+      path: "homeId",
+      options: { strictPopulate: false },
+    });
 
-    
-    userBookings = userBookings.filter(booking => booking.homeId !== null);
+    userBookings = userBookings.filter((booking) => booking.homeId !== null);
 
-    
-    res.render('store/bookings', {
+    res.render("store/bookings", {
       BookedHomes: userBookings,
-      pageTitle: 'My Bookings',
-      isLoggedIn: true
+      pageTitle: "My Bookings",
+      isLoggedIn: true,
     });
   } catch (err) {
     console.error("Error in getBookings controller:", err);
@@ -157,7 +154,6 @@ exports.postRemoveFromBooking = async (req, res, next) => {
 
 /*end*/
 
-
 const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
 const geocoder = mbxGeocoding({ accessToken: process.env.MAPBOX_TOKEN });
 
@@ -175,7 +171,6 @@ exports.getHomeDetails = async (req, res, next) => {
     const homeId = req.params.homeId;
     const home = await Home.findById(homeId).populate("reviews");
 
-    
     if (!home) {
       console.error(`CRITICAL: No home found in database for ID: ${homeId}`);
       return res
@@ -185,7 +180,6 @@ exports.getHomeDetails = async (req, res, next) => {
         );
     }
 
-    
     if (
       !home.geometry ||
       !home.geometry.coordinates ||
@@ -239,7 +233,9 @@ exports.getHomeDetails = async (req, res, next) => {
       isFavourite,
       bookingError: req.query.bookingError === "1",
       mapCoordinatesJSON: toScriptJSON(
-        home.geometry && home.geometry.coordinates ? home.geometry.coordinates : null
+        home.geometry && home.geometry.coordinates
+          ? home.geometry.coordinates
+          : null,
       ),
       homeTitleJSON: toScriptJSON(home.houseName),
       homeAddressJSON: toScriptJSON(home.location),
@@ -253,15 +249,22 @@ exports.postReview = async (req, res, next) => {
   try {
     const homeId = req.params.homeId;
 
+    if (!req.session.user) {
+      return res.redirect("/login");
+    }
+
+    const user = await User.findById(req.session.user._id);
+
+    if (!user) {
+      return res.redirect("/login");
+    }
+
     const { rating, comment } = req.body;
 
     const review = new Review({
-      username: req.session.user.firstName,
-
+      username: user.firstName,
       rating,
-
       comment,
-
       home: homeId,
     });
 
@@ -276,7 +279,6 @@ exports.postReview = async (req, res, next) => {
     res.redirect("/homes/" + homeId);
   } catch (err) {
     console.log(err);
-
     next(err);
   }
 };

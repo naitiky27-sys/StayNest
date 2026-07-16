@@ -228,15 +228,14 @@
                                                                 <div
                                                                     class="w-12 h-12 rounded-full bg-[#FF385C] text-white flex items-center justify-center font-bold text-lg">
 
-                                                                    <%= review.username ?
-                                                                        review.username.charAt(0).toUpperCase() : "U" %>
+                                                                    <%= review.username.charAt(0).toUpperCase() %>
 
                                                                 </div>
 
                                                                 <div>
 
                                                                     <h3 class="font-bold text-lg">
-                                                                        <%= review.username || "Anonymous User" %>
+                                                                        <%= review.username %>
                                                                     </h3>
 
                                                                     <p class="text-gray-500 text-sm">
@@ -701,14 +700,14 @@
         </div>
 
         <script>
-            mapboxgl.accessToken = <% - JSON.stringify(mapboxToken) %>;
+            mapboxgl.accessToken = <%- JSON.stringify(mapboxToken) %>;
 
             // Values are pre-serialized server-side (see toScriptJSON in
             // storeController.js) so they can be embedded directly here
             // without risk of breaking out of the script tag.
-            const coordinates = <% - mapCoordinatesJSON %>;
-            const homeTitle = <% - homeTitleJSON %>;
-            const homeAddress = <% - homeAddressJSON %>;
+            const coordinates = <%- mapCoordinatesJSON %>;
+            const homeTitle = <%- homeTitleJSON %>;
+            const homeAddress = <%- homeAddressJSON %>;
 
             let mapCenter = [77.2090, 28.6139];
             let validPin = false;
